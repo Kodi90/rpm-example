@@ -30,7 +30,7 @@ jobs:
           yum update -y
           yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
         
-      - name: Install Dependencies
+      - name: Add spec
         run: |
           pwd
           ls
@@ -40,6 +40,9 @@ jobs:
             printf("Hello World!\\n");
             return 0;
           }' | gcc -o ~/example/hello-world-program/hello-world -x c -
+          mkdir -p ~/example/rpm-work-dir
+          cp hello.spec ~/example/rpm-work-dir
+
           
 
     
