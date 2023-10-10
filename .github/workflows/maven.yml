@@ -32,8 +32,6 @@ jobs:
         
       - name: Add spec
         run: |
-          pwd
-          ls
           mkdir -p ~/example/hello-world-program
           echo '#include <stdio.h>
           int main() {
