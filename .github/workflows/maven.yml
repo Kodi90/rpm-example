@@ -42,6 +42,13 @@ jobs:
           cp hello.spec ~/example/rpm-work-dir
           ls -1 ~/example/rpm-work-dir
 
+      - name: Build
+        run: |
+          rpmbuild --target "x86_64" -bb hello-world.spec
+
+
+      
+
           
 
     
