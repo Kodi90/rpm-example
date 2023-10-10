@@ -21,6 +21,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    # Run your command inside a Docker container and use a file from the repository
+    - name: Run command inside Docker container and use file from repo
+      run: |
+        docker run -it --rm -v "$(pwd):/app" centos:latest bash -c '
+          yum update -y
+          yum install -y your-package-dependencies
+          cd /app
+          # Use the file from the repository inside the Docker container
+          cat path/to/your/file
+        '
     
     # - name: Set up JDK 17
     #   uses: actions/setup-java@v3
