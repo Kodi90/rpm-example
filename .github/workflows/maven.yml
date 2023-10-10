@@ -23,5 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Check for file
-        run: (ls)
+        run: |
+          yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils
+
     
