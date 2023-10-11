@@ -10,9 +10,9 @@ RUN cd /etc/yum.repos.d/ \
 
 #RUN #rpmdev-setuptree
 
-RUN #tree
+#RUN #tree
 
-COPY hello.spec .
+#COPY hello.spec .
 
 
 CMD [ "/bin/bash" ]
