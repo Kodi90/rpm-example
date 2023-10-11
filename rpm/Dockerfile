@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:latest
 
 RUN cd /etc/yum.repos.d/ \
     && sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
