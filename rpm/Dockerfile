@@ -7,17 +7,12 @@ RUN cd /etc/yum.repos.d/ \
     && yum update -y \
     && yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
 
-RUN pwd
-RUN cd ..
-RUN pwd
-RUN cd ..
-RUN pwd
 
 #RUN #rpmdev-setuptree
 
 #RUN #tree
 
 COPY . .
-
+RUN tree
 
 CMD [ "/bin/bash" ]
