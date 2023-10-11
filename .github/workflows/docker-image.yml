@@ -32,13 +32,15 @@ jobs:
             return 0;
           }' | gcc -o ~/example/hello-world-program/hello-world -x c -
           mkdir -p ~/example/rpm-work-dir
-          mv hello.spec ~/rpmbuild/SPECS
+#          mv hello.spec ~/rpmbuild/SPECS
 
       - name: Build
         run: |
           pwd
           tree
           rpmbuild --target "x86_64" -bb hello-world.spec
+          cd ~
+          tree
           echo $HOME
 #                    rpmbuild --target "x86_64" -bb $HOME/example/hello-world.spec
 #               tree
