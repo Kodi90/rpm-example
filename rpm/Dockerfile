@@ -16,9 +16,9 @@ RUN dnf -y update \
 #USER appuser
 RUN rpmdev-setuptree
 
-#COPY hello.spec /root/rpmbuild/SPECS/
+COPY . .
 
-RUN #echo ${PWD} && ls -lR
+RUN echo ${PWD} && ls -lR
 
 #RUN ls op
 #RUN tree
