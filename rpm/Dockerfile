@@ -1,5 +1,6 @@
 FROM centos:latest
 
+COPY . .
 
 RUN cd /etc/yum.repos.d/ \
     && sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
@@ -12,7 +13,7 @@ RUN cd /etc/yum.repos.d/ \
 
 #RUN #tree
 
-COPY . .
-RUN tree
+#RUN tree
+#RUN tree
 
 CMD [ "/bin/bash" ]
