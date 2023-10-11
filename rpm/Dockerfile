@@ -1,59 +1,40 @@
-FROM centos:latest
+FROM fedora:latest
 
-#COPY ./hello.spec ./hello.spec
-RUN ls
-RUN cd /etc/yum.repos.d/ \
-    && sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
-    && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* \
-    && yum update -y \
-    && yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
+# RUN adduser -D appuser
 
-RUN mkdir -p ~/example/hello-world-program
-RUN echo '#include <stdio.h> \
-    int main() { \
-        printf("Hello World!\\n"); \
-        return 0; \
-    }' | gcc -o ~/example/hello-world-program/hello-world -x c -
 
-RUN mkdir -p ~/example/rpm-work-dir
-RUN cd ~/example/rpm-work-dir
+RUN dnf -y update \
+    && dnf -y install rpmdevtools* \
+        rpmlint \
+        tree \
+        git \
+    && dnf clean all
 
-RUN cd ~/example/rpm-work-dir
+RUN adduser appuser
+USER appuser
 
-RUN echo "Summary: A simple program that prints hello \
-    Name: hello-world \
-    Version: 1.0.0 \
-    Release: 1 \
-    URL: https://example.com \
-    Group: System \
-    License: example # https://fedoraproject.org/wiki/Licensing:Main?rd=Licensing#Software_License_List \
-    Packager: Example Team \
-    Requires: bash \
-    BuildRoot: ~/example/rpm-work-dir # this should be replaced with your working directory where the spec is saved \
-    \
-    %description \
-    An example package containing a hello-world binary \
-    \
-    %install \
-    mkdir -p %{buildroot}/usr/bin/ \
-    cp ~/example/hello-world-program/hello-world %{buildroot}/usr/bin/hello-world \
-    \
-    %files \
-    /usr/bin/hello-world \
-    \
-    %changelog \
-    * Thu Jun 17 2021 alex <alex@earthly.dev> \
-    - initial example \
-    " > hello-world.spec
+RUN rpmdev-setuptree
 
-RUN ls
-RUN rpmbuild --target "x86_64" -bb hello-world.spec
+USER root
 
-#RUN #rpmdev-setuptree
+# COPY hello.sh .
+#COPY hello.spec .
+#RUN mkdir hello-0.0.1
+#RUN mv hello.sh hello-0.0.1
+#RUN tar --create --file hello-0.0.1.tar.gz hello-0.0.1
+#RUN mv hello-0.0.1.tar.gz /home/appuser/rpmbuild/SOURCES
+#RUN mv hello.spec /home/appuser/rpmbuild/SPECS
+## RUN mv hello-0.0.1
+#RUN rm -rf hello-0.0.1
+#USER appuser
+#RUN rpmlint ~/rpmbuild/SPECS/hello.spec
+#RUN rpmbuild -bs ~/rpmbuild/SPECS/hello.spec
+#RUN rpmbuild -bb ~/rpmbuild/SPECS/hello.spec
+#
+#USER root
+#RUN dnf install /home/appuser/rpmbuild/RPMS/noarch/hello-0.0.1-1.fc38.noarch.rpm -y
 
-#RUN #tree
 
-#RUN tree
-#RUN tree
+EXPOSE 80
 
 CMD [ "/bin/bash" ]
