@@ -40,7 +40,7 @@ jobs:
             return 0;
           }' | gcc -o ~/example/hello-world-program/hello-world -x c -
           mkdir -p ~/example/rpm-work-dir
-          # cp hello.spec ~/example/rpm-work-dir
+          mv hello.spec ~/example/rpm-work-dir
           # ls -1 ~/example/rpm-work-dir
           rpmbuild --target "x86_64" -bb ~/example/rpm-work-dir/hello-world.spec
 #
