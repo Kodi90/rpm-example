@@ -18,45 +18,48 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container:
-      image: centos:latest
+    # container:
+    #   image: centos:latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install Dependencies
-        shell: bash
+      - name: run docker
         run: |
-          cd /etc/yum.repos.d/
-          sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
-          sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
-          yum update -y
-          yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
+          docker run -ti --rm centos:8 /bin/bash
+      # - name: Install Dependencies
+      #   shell: bash
+      #   run: |
+      #     cd /etc/yum.repos.d/
+      #     sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+      #     sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+      #     yum update -y
+      #     yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
         
-      - name: Add spec
-        shell: bash
-        run: |
-          mkdir -p /example/hello-world-program
-          echo '#include <stdio.h>
-          int main() {
-            printf("Hello World!\\n");
-            return 0;
-          }' | gcc -o /example/hello-world-program/hello-world -x c -
-          mkdir -p /example/rpm-work-dir
-          cp hello.spec /example/rpm-work-dir
-          # ls -1 /example/rpm-work-dir
-          ls
-          pwd
-          tree
-          cd ..
-          tree
-          cd ..
-          tree
+      # - name: Add spec
+      #   shell: bash
+      #   run: |
+      #     mkdir -p /example/hello-world-program
+      #     echo '#include <stdio.h>
+      #     int main() {
+      #       printf("Hello World!\\n");
+      #       return 0;
+      #     }' | gcc -o /example/hello-world-program/hello-world -x c -
+      #     mkdir -p /example/rpm-work-dir
+      #     cp hello.spec /example/rpm-work-dir
+      #     # ls -1 /example/rpm-work-dir
+      #     ls
+      #     pwd
+      #     tree
+      #     cd ..
+      #     tree
+      #     cd ..
+      #     tree
 
-      - name: Build
-        shell: bash
-        run: |
-          pwd
-          ls
-          cd ..
-          ls
-          pwd
-          # rpmbuild --target "x86_64" -bb hello-world.spec
+      # - name: Build
+      #   shell: bash
+      #   run: |
+      #     pwd
+      #     ls
+      #     cd ..
+      #     ls
+      #     pwd
+      #     # rpmbuild --target "x86_64" -bb hello-world.spec
