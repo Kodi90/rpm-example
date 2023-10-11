@@ -1,23 +1,40 @@
-FROM centos:latest
+FROM fedora:latest
+
+# RUN adduser -D appuser
 
 
-RUN cd /etc/yum.repos.d/ \
-    && sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
-    && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* \
-    && yum update -y \
-    && yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
+RUN dnf -y update \
+    && dnf -y install rpmdevtools* \
+        rpmlint \
+        tree \
+        git \
+    && dnf clean all
 
-RUN pwd
-RUN cd ..
-RUN pwd
-RUN cd ..
-RUN pwd
+RUN adduser appuser
+USER appuser
 
-#RUN #rpmdev-setuptree
+RUN rpmdev-setuptree
 
-#RUN #tree
+USER root
 
-#COPY hello.spec .
+# COPY hello.sh .
+COPY hello.spec .
+RUN mkdir hello-0.0.1
+RUN mv hello.sh hello-0.0.1
+RUN tar --create --file hello-0.0.1.tar.gz hello-0.0.1
+RUN mv hello-0.0.1.tar.gz /home/appuser/rpmbuild/SOURCES
+RUN mv hello.spec /home/appuser/rpmbuild/SPECS
+# RUN mv hello-0.0.1
+RUN rm -rf hello-0.0.1
+USER appuser
+RUN rpmlint ~/rpmbuild/SPECS/hello.spec
+RUN rpmbuild -bs ~/rpmbuild/SPECS/hello.spec
+RUN rpmbuild -bb ~/rpmbuild/SPECS/hello.spec
 
+USER root
+RUN dnf install /home/appuser/rpmbuild/RPMS/noarch/hello-0.0.1-1.fc38.noarch.rpm -y
+
+
+EXPOSE 80
 
 CMD [ "/bin/bash" ]
