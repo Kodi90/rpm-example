@@ -1,6 +1,6 @@
 FROM centos:latest
 
-COPY hello.spec ./hello.spec
+COPY /rpm/hello.spec ./hello.spec
 RUN ls
 RUN cd /etc/yum.repos.d/ \
     && sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
