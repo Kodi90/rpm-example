@@ -12,7 +12,8 @@ jobs:
       image: centos:8
     steps:
       - uses: actions/checkout@v3
-      - name: Install Dependencies
+      - id: dep
+        name: Install Dependencies
         run: |
           cd /etc/yum.repos.d/
           sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
