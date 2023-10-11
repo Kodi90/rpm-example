@@ -35,7 +35,8 @@ jobs:
           rpmdev-setuptree
           cd ~
           tree
-          rpmbuild --target "x86_64" -bb hello-world.spec
+#          rpmbuild --target "x86_64" -bb hello-world.spec
+          rpmbuild --target "x86_64" -bs ~/example/rpm-work-dir/hello.spec
 #          mv hello.spec ~/example/rpm-work-dir
 #          cd ~
 #          tree
