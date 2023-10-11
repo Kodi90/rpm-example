@@ -10,7 +10,9 @@ RUN dnf -y update \
         git \
     && dnf clean all
 
+
 #RUN adduser appuser
+
 #USER appuser
 RUN rpmdev-setuptree
 
