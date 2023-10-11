@@ -18,7 +18,7 @@ RUN rpmdev-setuptree
 
 COPY . .
 
-RUN find . -type f -name "style*"
+RUN find . -type f -name "hello*"
 
 #RUN ls op
 #RUN tree
