@@ -30,8 +30,8 @@ jobs:
           int main() {
             printf("Hello World!\\n");
             return 0;
-          }' | gcc -o ~/example/hello-world-program/hello-world -x c -
-          mkdir -p ~/example/rpm-work-dir
+          }' | gcc -o ~/rpmbuild/SOURCES/hello-world -x c -
+#          mkdir -p ~/example/rpm-work-dir
 #          mv hello.spec ~/rpmbuild/SPECS
 
       - name: Build
@@ -39,9 +39,9 @@ jobs:
           pwd
           tree
           rpmbuild --target "x86_64" -bb hello-world.spec
-          cd ~
+#          cd ~
           tree
-          echo $HOME
+#          echo $HOME
 #                    rpmbuild --target "x86_64" -bb $HOME/example/hello-world.spec
 #               tree
           #          tree
