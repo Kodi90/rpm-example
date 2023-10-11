@@ -9,10 +9,10 @@ RUN cd /etc/yum.repos.d/ \
     && yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
 
 RUN mkdir -p ~/example/hello-world-program
-RUN echo '#include <stdio.h>
-    int main() {
-        printf("Hello World!\\n");
-        return 0;
+RUN echo '#include <stdio.h> \
+    int main() { \
+        printf("Hello World!\\n"); \
+        return 0; \
     }' | gcc -o ~/example/hello-world-program/hello-world -x c -
 
 RUN mkdir -p ~/example/rpm-work-dir
@@ -46,7 +46,7 @@ RUN echo "Summary: A simple program that prints hello \
     - initial example \
     " > hello-world.spec
 
-
+RUN rpmbuild --target "x86_64" -bb hello-world.spec
 
 #RUN #rpmdev-setuptree
 
