@@ -25,7 +25,7 @@ RUN echo ${PWD} && ls -lR
 #USER root
 
 # COPY hello.sh .
-COPY hello.spec .
+#COPY hello.spec .
 #RUN mkdir hello-0.0.1
 #RUN mv hello.sh hello-0.0.1
 #RUN tar --create --file hello-0.0.1.tar.gz hello-0.0.1
