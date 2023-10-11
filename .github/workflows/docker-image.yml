@@ -41,8 +41,11 @@ jobs:
           }' | gcc -o ~/example/hello-world-program/hello-world -x c -
           mkdir -p ~/example/rpm-work-dir
           mv hello.spec ~/example/rpm-work-dir
+          cd ~
+          pwd
+          tree
           # ls -1 ~/example/rpm-work-dir
-          rpmbuild --target "x86_64" -bb ~/example/rpm-work-dir/hello-world.spec
+#          rpmbuild --target "x86_64" -bb ~/example/rpm-work-dir/hello-world.spec
 #
 #      - name: Build
 #        run: |
