@@ -23,6 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install Dependencies
+        shell: bash
         run: |
           cd /etc/yum.repos.d/
           sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
@@ -31,6 +32,7 @@ jobs:
           yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
         
       - name: Add spec
+        shell: bash
         run: |
           mkdir -p /example/hello-world-program
           echo '#include <stdio.h>
@@ -50,6 +52,7 @@ jobs:
           tree
 
       - name: Build
+        shell: bash
         run: |
           pwd
           ls
