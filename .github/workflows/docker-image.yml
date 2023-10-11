@@ -1,3 +1,54 @@
+#name: RPM build
+#
+#on:
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+#    branches: [ "main" ]
+#
+#jobs:
+#  build:
+#
+#    runs-on: ubuntu-latest
+#    container:
+#      image: centos:8
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Install Dependencies
+#        run: |
+#          cd /etc/yum.repos.d/
+#          sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+#          sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+#          yum update -y
+#          yum install -y createrepo rpm-build rpmdev-setuptree rpm-sign wget gcc python3 yum-utils tree
+#      - name: Add spec
+#        run: |
+#          mkdir -p ~/example/hello-world-program
+#          echo '#include <stdio.h>
+#          int main() {
+#            printf("Hello World!\\n");
+#            return 0;
+#          }' | gcc -o ~/example/hello-world-program/hello-world -x c -
+#          mkdir -p ~/example/rpm-work-dir
+#          mv hello.spec ~/example/rpm-work-dir
+#          rpmdev-setuptree
+#          cd ~
+#          tree
+##          rpmbuild --target "x86_64" -bb hello-world.spec
+#          rpmbuild --target "x86_64" -bs ~/example/rpm-work-dir/hello.spec
+##          mv hello.spec ~/example/rpm-work-dir
+##          cd ~
+##          tree
+#          # ls -1 ~/example/rpm-work-dir
+#
+#      - name: Build
+#        run: |
+#          find . -type f -name "hello*"
+#          #          cd ..
+#          #          rpmbuild --target "x86_64" -bb hello-world.spec
+#
+
+
 name: RPM build
 
 on:
@@ -23,22 +74,22 @@ jobs:
           yum install -y createrepo rpm-build rpmdev-setuptree rpm-sign wget gcc python3 yum-utils tree
       - name: Add spec
         run: |
-          mkdir -p ~/example/hello-world-program
-          echo '#include <stdio.h>
-          int main() {
-            printf("Hello World!\\n");
-            return 0;
-          }' | gcc -o ~/example/hello-world-program/hello-world -x c -
-          mkdir -p ~/example/rpm-work-dir
-          mv hello.spec ~/example/rpm-work-dir
-          rpmdev-setuptree
-          cd ~
-          tree
-#          rpmbuild --target "x86_64" -bb hello-world.spec
-          rpmbuild --target "x86_64" -bs ~/example/rpm-work-dir/hello.spec
-#          mv hello.spec ~/example/rpm-work-dir
-#          cd ~
-#          tree
+               mkdir -p ~/example/hello-world-program
+               echo '#include <stdio.h>
+               int main() {
+               printf("Hello World!\\n");
+               return 0;
+               }' | gcc -o ~/example/hello-world-program/hello-world -x c -
+               mkdir -p ~/example/rpm-work-dir
+               mv hello.spec ~/example/rpm-work-dir
+               rpmdev-setuptree
+               cd ~
+               tree
+          #          rpmbuild --target "x86_64" -bb hello-world.spec
+               rpmbuild --target "x86_64" -bs ~/example/rpm-work-dir/hello.spec
+          #          mv hello.spec ~/example/rpm-work-dir
+          #          cd ~
+          #          tree
           # ls -1 ~/example/rpm-work-dir
 
       - name: Build
@@ -46,6 +97,12 @@ jobs:
           find . -type f -name "hello*"
           #          cd ..
           #          rpmbuild --target "x86_64" -bb hello-world.spec
+
+
+
+
+
+
 
 
 
