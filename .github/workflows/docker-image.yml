@@ -39,11 +39,13 @@ jobs:
             return 0;
           }' | gcc -o ~/example/hello-world-program/hello-world -x c -
           mkdir -p ~/example/rpm-work-dir
+          rpmdev-setuptree
           # cp hello.spec ~/example/rpm-work-dir
           # ls -1 ~/example/rpm-work-dir
 
       - name: Build
-        run: find . -type f -name "hello*"
+        run: |
+          find . -type f -name "hello*"
           #          cd ..
           #          rpmbuild --target "x86_64" -bb hello-world.spec
 
