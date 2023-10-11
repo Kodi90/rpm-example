@@ -46,7 +46,6 @@ jobs:
           cd ..
           pwd
           tree
-
 #          # ls -1 ~/example/rpm-work-dir
           rpmbuild --target "x86_64" -bb /rpm-work-dir/hello-world.spec
 #
