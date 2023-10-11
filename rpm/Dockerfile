@@ -1,6 +1,6 @@
 FROM centos:latest
 
-RUN PWD
+RUN pwd
 
 RUN cd /etc/yum.repos.d/ \
     && sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
