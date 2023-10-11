@@ -42,8 +42,8 @@ jobs:
           mv hello.spec ~/example/rpm-work-dir
           rpmdev-setuptree
 #          mv hello.spec ~/example/rpm-work-dir
-#          cd ~
-#          tree
+          cd ~
+          tree
           # ls -1 ~/example/rpm-work-dir
 
       - name: Build
