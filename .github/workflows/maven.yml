@@ -43,9 +43,10 @@ jobs:
           # ls -1 ~/example/rpm-work-dir
           pwd
 
-      # - name: Build
-      #   run: |
-      #     ls
-      #     pwd
-      #     cd ..
-      #     rpmbuild --target "x86_64" -bb hello-world.spec
+      - name: Build
+        run: |
+          cd ~
+          pwd
+          ls
+          # cd ..
+          # rpmbuild --target "x86_64" -bb hello-world.spec
