@@ -44,6 +44,10 @@ jobs:
           ls
           pwd
           tree
+          cd ..
+          tree
+          cd ..
+          tree
 
       - name: Build
         run: |
