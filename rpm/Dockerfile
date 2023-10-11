@@ -16,7 +16,8 @@ RUN rpmdev-setuptree
 
 COPY hello.spec /root/rpmbuild/SPECS/
 
-#RUN ls
+
+#RUN ls op
 #RUN tree
 #USER root
 
