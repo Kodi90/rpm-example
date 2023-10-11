@@ -32,21 +32,22 @@ jobs:
         
       - name: Add spec
         run: |
-          mkdir -p ~/example/hello-world-program
+          mkdir -p /example/hello-world-program
           echo '#include <stdio.h>
           int main() {
             printf("Hello World!\\n");
             return 0;
-          }' | gcc -o ~/example/hello-world-program/hello-world -x c -
-          mkdir -p ~/example/rpm-work-dir
-          cp hello.spec ~/example/rpm-work-dir
-          # ls -1 ~/example/rpm-work-dir
+          }' | gcc -o /example/hello-world-program/hello-world -x c -
+          mkdir -p /example/rpm-work-dir
+          cp hello.spec /example/rpm-work-dir
+          # ls -1 /example/rpm-work-dir
           pwd
 
       - name: Build
         run: |
-          cd ~
           pwd
           ls
-          # cd ..
+          cd ..
+          ls
+          pwd
           # rpmbuild --target "x86_64" -bb hello-world.spec
