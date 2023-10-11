@@ -41,7 +41,9 @@ jobs:
           mkdir -p /example/rpm-work-dir
           cp hello.spec /example/rpm-work-dir
           # ls -1 /example/rpm-work-dir
+          ls
           pwd
+          tree
 
       - name: Build
         run: |
