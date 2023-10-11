@@ -37,11 +37,12 @@ jobs:
       - name: Build
         run: |
           pwd
-          tree
+#          tree
           rpmbuild --target "x86_64" -bb hello-world.spec
+          hello
           cd ~
-          tree
-          echo $HOME
+#          tree
+#          echo $HOME
 #                              rpmbuild --target "x86_64" -bb $HOME/example/hello-world.spec
 #                         tree
         #          tree
