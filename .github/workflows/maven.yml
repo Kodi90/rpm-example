@@ -30,17 +30,18 @@ jobs:
           yum update -y
           yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
         
-      # - name: Add spec
-      #   run: |
-      #     mkdir -p ~/example/hello-world-program
-      #     echo '#include <stdio.h>
-      #     int main() {
-      #       printf("Hello World!\\n");
-      #       return 0;
-      #     }' | gcc -o ~/example/hello-world-program/hello-world -x c -
-      #     mkdir -p ~/example/rpm-work-dir
-      #     # cp hello.spec ~/example/rpm-work-dir
-      #     # ls -1 ~/example/rpm-work-dir
+      - name: Add spec
+        run: |
+          mkdir -p ~/example/hello-world-program
+          echo '#include <stdio.h>
+          int main() {
+            printf("Hello World!\\n");
+            return 0;
+          }' | gcc -o ~/example/hello-world-program/hello-world -x c -
+          mkdir -p ~/example/rpm-work-dir
+          cp hello.spec ~/example/rpm-work-dir
+          # ls -1 ~/example/rpm-work-dir
+          pwd
 
       # - name: Build
       #   run: |
