@@ -17,7 +17,7 @@ RUN pwd
 
 #RUN #tree
 
-COPY ./hello.spec .
+COPY . .
 
 
 CMD [ "/bin/bash" ]
