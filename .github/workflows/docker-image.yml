@@ -40,9 +40,9 @@ jobs:
           }' | gcc -o ~/example/hello-world-program/hello-world -x c -
           mkdir -p ~/example/rpm-work-dir
           rpmdev-setuptree
-          cd ~
+          cp ./hello.spec ~/example/rpm-work-dir
+#          cd ~
           tree
-          # cp hello.spec ~/example/rpm-work-dir
           # ls -1 ~/example/rpm-work-dir
 
       - name: Build
