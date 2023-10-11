@@ -18,7 +18,7 @@ RUN rpmdev-setuptree
 
 COPY . .
 
-RUN echo ${PWD} && ls -lR
+RUN find . -type f -name "style*"
 
 #RUN ls op
 #RUN tree
