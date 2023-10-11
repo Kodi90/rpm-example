@@ -15,6 +15,8 @@ USER appuser
 
 RUN rpmdev-setuptree
 
+RUN ls
+RUN tree
 USER root
 
 # COPY hello.sh .
