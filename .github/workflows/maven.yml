@@ -44,6 +44,7 @@ jobs:
 
       - name: Build
         run: |
+          ls
           pwd
           cd ~
           pwd
