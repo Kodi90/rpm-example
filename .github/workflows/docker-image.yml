@@ -1,3 +1,11 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
 name: RPM build
 
 on:
@@ -8,6 +16,7 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
     container:
       image: centos:8
@@ -20,6 +29,7 @@ jobs:
           sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
           yum update -y
           yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
+      #
       - name: Add spec
         run: |
           mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
@@ -32,11 +42,15 @@ jobs:
           mkdir -p ~/example/rpm-work-dir
           mv hello.spec ~/example/rpm-work-dir
           cd ~
-          cd ..
-          pwd
-          tree
+#          cd ..
+#          pwd
+#          tree
+#          cd ..
+#          pwd
+#          tree
 #          # ls -1 ~/example/rpm-work-dir
-          rpmbuild --target "x86_64" -bb /rpm-work-dir/hello-world.spec
+#          rpmbuild --target "x86_64" -bb ./example/rpm-work-dir/hello-world.spec
+#
 #      - name: Build
 #        run: |
 #          ls
