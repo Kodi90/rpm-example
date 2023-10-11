@@ -46,6 +46,7 @@ RUN echo "Summary: A simple program that prints hello \
     - initial example \
     " > hello-world.spec
 
+RUN ls
 RUN rpmbuild --target "x86_64" -bb hello-world.spec
 
 #RUN #rpmdev-setuptree
