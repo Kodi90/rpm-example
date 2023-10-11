@@ -1,5 +1,4 @@
 name: RPM build
-
 on:
   push:
     branches: [ "main" ]
@@ -8,7 +7,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     container:
       image: centos:8
@@ -21,8 +19,7 @@ jobs:
           sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
           yum update -y
           yum install -y createrepo rpmdevtools* rpm-sign wget gcc python3 yum-utils tree
-      - name: Build
-        run: find . -type f -name "hello*"
+
       - name: Add spec
         run: |
           mkdir -p ~/example/hello-world-program
