@@ -1,13 +1,4 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: RPM build
-
 on:
   push:
     branches: [ "main" ]
@@ -16,43 +7,50 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     container:
       image: centos:8
     steps:
       - uses: actions/checkout@v3
-      - name: Install Dependencies
+      - id: dep
+        name: Install Dependencies
         run: |
           cd /etc/yum.repos.d/
           sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
           sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
           yum update -y
-          yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
+          yum install -y createrepo rpmdevtools* rpm-sign wget gcc python3 yum-utils tree
 #
-#      - name: Add spec
-#        run: |
-#          mkdir -p ~/example/hello-world-program
-#          echo '#include <stdio.h>
-#          int main() {
-#            printf("Hello World!\\n");
-#            return 0;
-#          }' | gcc -o ~/example/hello-world-program/hello-world -x c -
-#          mkdir -p ~/example/rpm-work-dir
-#          # cp hello.spec ~/example/rpm-work-dir
-#          # ls -1 ~/example/rpm-work-dir
-#
-#      - name: Build
-#        run: |
-#          ls
-#          pwd
-#          cd ..
+      - name: Add spec
+        run: |
+          mkdir -p ~/example/hello-world-program
+          echo '#include <stdio.h>
+          int main() {
+            printf("Hello World!\\n");
+            return 0;
+          }' | gcc -o ~/example/hello-world-program/hello-world -x c -
+          mkdir -p ~/example/rpm-work-dir
+          mv hello.spec ~/example/rpm-work-dir
+          rpmdev-setuptree
+          cd ~
+          tree
 #          rpmbuild --target "x86_64" -bb hello-world.spec
-#
-#
-#
-#
-#
-#
-#
-#
+          rpmbuild --target "x86_64" -bs ~/example/rpm-work-dir/hello.spec
+#          mv hello.spec ~/example/rpm-work-dir
+#          cd ~
+#          tree
+          # ls -1 ~/example/rpm-work-dir
+
+      - name: Build
+        run: |
+          find . -type f -name "hello*"
+          #          cd ..
+          #          rpmbuild --target "x86_64" -bb hello-world.spec
+
+
+
+
+
+
+
+
