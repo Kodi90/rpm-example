@@ -53,7 +53,8 @@ jobs:
       - name: Build
         run: |
           cd ~
+          pwd
           tree
-          rpmbuild --target "x86_64" -bb ./example/rpm-work-dir/hello-world.spec
+          rpmbuild --target "x86_64" -bb /example/rpm-work-dir/hello-world.spec
 #          cd ..
 #          rpmbuild --target "x86_64" -bb hello-world.spec
