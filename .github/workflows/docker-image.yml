@@ -55,7 +55,8 @@ jobs:
           cd ~
           pwd
           tree
-          rpmbuild --target "x86_64" -bb hello-world.spec
-          tree
+          echo $HOME
+#          rpmbuild --target "x86_64" -bb hello-world.spec
+#          tree
 #          cd ..
 #          rpmbuild --target "x86_64" -bb hello-world.spec
