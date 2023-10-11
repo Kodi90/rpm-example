@@ -49,6 +49,7 @@ jobs:
           cd ~
           pwd
           rpmbuild --target "x86_64" -bb hello-world.spec
+          
 
 
       
