@@ -30,6 +30,7 @@ jobs:
           yum update -y
           yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
 #
+
       - name: Add spec
         run: |
           mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
