@@ -31,19 +31,19 @@ jobs:
             printf("Hello World!\\n");
             return 0;
           }' | gcc -o ~/rpmbuild/SOURCES/hello-world -x c -
-      #          mkdir -p ~/example/rpm-work-dir
+#          mkdir -p ~/example/rpm-work-dir
       #          mv hello.spec ~/rpmbuild/SPECS
 
       - name: Build
         run: |
-         pwd
-         tree
-         rpmbuild --target "x86_64" -bb hello-world.spec
-    #          cd ~
-         tree
-    #          echo $HOME
-    #                    rpmbuild --target "x86_64" -bb $HOME/example/hello-world.spec
-    #               tree
-    #          tree
+          pwd
+          tree
+          rpmbuild --target "x86_64" -bb hello-world.spec
+          cd ~
+          tree
+          echo $HOME
+#                              rpmbuild --target "x86_64" -bb $HOME/example/hello-world.spec
+#                         tree
+        #          tree
 #               cd ..
 #               rpmbuild --target "x86_64" -bb hello-world.spec
