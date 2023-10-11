@@ -57,6 +57,7 @@ jobs:
           tree
           echo $HOME
           rpmbuild --target "x86_64" -bb $HOME/example/hello.spec
+          tree
 #          tree
 #          cd ..
 #          rpmbuild --target "x86_64" -bb hello-world.spec
