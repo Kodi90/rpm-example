@@ -49,7 +49,7 @@ jobs:
           ls
           pwd
           cd ..
-          rpmbuild --target "x86_64" -bb hello-world.spec
+          rpmbuild --target "x86_64" -bb rpm-example/hello-world.spec
       
 
 
