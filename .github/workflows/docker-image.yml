@@ -39,7 +39,7 @@ jobs:
           pwd
 #          tree
           rpmbuild --target "x86_64" -bb hello-world.spec
-          hello
+#          hello
           cd ~
 #          tree
 #          echo $HOME
