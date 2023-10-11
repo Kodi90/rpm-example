@@ -10,14 +10,15 @@ RUN dnf -y update \
         git \
     && dnf clean all
 
-RUN adduser appuser
-USER appuser
-
+#RUN adduser appuser
+#USER appuser
 RUN rpmdev-setuptree
 
-RUN ls
-RUN tree
-USER root
+COPY hello.spec /root/rpmbuild/SPECS/
+
+#RUN ls
+#RUN tree
+#USER root
 
 # COPY hello.sh .
 #COPY hello.spec .
