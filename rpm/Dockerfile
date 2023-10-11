@@ -1,47 +1,56 @@
-FROM fedora:latest
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
 
-# RUN adduser -D appuser
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: RPM build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    container:
+      image: centos:8
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: |
+          cd /etc/yum.repos.d/
+          sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+          sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+          yum update -y
+          yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree
+        
+      - name: Add spec
+        run: |
+          mkdir -p ~/example/hello-world-program
+          echo '#include <stdio.h>
+          int main() {
+            printf("Hello World!\\n");
+            return 0;
+          }' | gcc -o ~/example/hello-world-program/hello-world -x c -
+          mkdir -p ~/example/rpm-work-dir
+          # cp hello.spec ~/example/rpm-work-dir
+          # ls -1 ~/example/rpm-work-dir
+
+      - name: Build
+        run: find . -type f -name "hello*"
+#          cd ..
+#          rpmbuild --target "x86_64" -bb hello-world.spec
+      
 
 
-RUN dnf -y update \
-    && dnf -y install rpmdevtools* \
-        rpmlint \
-        tree \
-        git \
-    && dnf clean all
+      
 
+          
 
-#RUN adduser appuser
-
-#USER appuser
-RUN rpmdev-setuptree
-
-COPY . .
-
-RUN find . -type f -name "hello*"
-
-#RUN ls op
-#RUN tree
-#USER root
-
-# COPY hello.sh .
-#COPY hello.spec .
-#RUN mkdir hello-0.0.1
-#RUN mv hello.sh hello-0.0.1
-#RUN tar --create --file hello-0.0.1.tar.gz hello-0.0.1
-#RUN mv hello-0.0.1.tar.gz /home/appuser/rpmbuild/SOURCES
-#RUN mv hello.spec /home/appuser/rpmbuild/SPECS
-## RUN mv hello-0.0.1
-#RUN rm -rf hello-0.0.1
-#USER appuser
-#RUN rpmlint ~/rpmbuild/SPECS/hello.spec
-#RUN rpmbuild -bs ~/rpmbuild/SPECS/hello.spec
-#RUN rpmbuild -bb ~/rpmbuild/SPECS/hello.spec
-#
-#USER root
-#RUN dnf install /home/appuser/rpmbuild/RPMS/noarch/hello-0.0.1-1.fc38.noarch.rpm -y
-
-
-EXPOSE 80
-
-CMD [ "/bin/bash" ]
+    
