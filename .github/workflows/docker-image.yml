@@ -42,7 +42,7 @@ jobs:
 #          hello
           cd ~
 #          tree
-#          echo $HOME
+          echo $RPM_BUILD_ROOT
 #                              rpmbuild --target "x86_64" -bb $HOME/example/hello-world.spec
 #                         tree
         #          tree
