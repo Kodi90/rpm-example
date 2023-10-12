@@ -1,23 +1,47 @@
-FROM centos:7
+FROM fedora:latest
 
-RUN cd /etc/yum.repos.d/ \
-    sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
-    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* \
-    yum update -y \
-    yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils tree \
+# RUN adduser -D appuser
 
-#ENV PATH /root/.nimble/bin:$PATH
-#RUN curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
-#RUN sh init.sh -y \
-#    && choosenim stable
-#COPY tools /tools
-#RUN cd /tools && \
-#    nimble build -Y && \
-#    cp -p bin/* /
+
+RUN dnf -y update \
+    && dnf -y install rpmdevtools* \
+        rpmlint \
+        tree \
+        git \
+    && dnf clean all
+
+
+#RUN adduser appuser
+
+#USER appuser
+RUN rpmdev-setuptree
+
+COPY . .
+
+RUN find . -type f -name "hello*"
+
+#RUN ls op
+#RUN tree
+#USER root
+
+# COPY hello.sh .
+#COPY hello-world.spec .
+#RUN mkdir hello-0.0.1
+#RUN mv hello.sh hello-0.0.1
+#RUN tar --create --file hello-0.0.1.tar.gz hello-0.0.1
+#RUN mv hello-0.0.1.tar.gz /home/appuser/rpmbuild/SOURCES
+#RUN mv hello-world.spec /home/appuser/rpmbuild/SPECS
+## RUN mv hello-0.0.1
+#RUN rm -rf hello-0.0.1
+#USER appuser
+#RUN rpmlint ~/rpmbuild/SPECS/hello-world.spec
+#RUN rpmbuild -bs ~/rpmbuild/SPECS/hello-world.spec
+#RUN rpmbuild -bb ~/rpmbuild/SPECS/hello-world.spec
 #
-#COPY template.spec /
-#COPY entrypoint.sh /usr/local/bin/
-#ENTRYPOINT ["entrypoint.sh"]
+#USER root
+#RUN dnf install /home/appuser/rpmbuild/RPMS/noarch/hello-0.0.1-1.fc38.noarch.rpm -y
 
+
+EXPOSE 80
 
 CMD [ "/bin/bash" ]

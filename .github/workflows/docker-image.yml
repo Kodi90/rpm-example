@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: RPM build
 
 on:
   push:
@@ -7,12 +7,30 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
 
     runs-on: ubuntu-latest
-
+    container:
+      image: centos:8
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file rpm/Dockerfile --tag my-image-name:$(date +%s)
+      - uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: |
+          cd /etc/yum.repos.d/
+          sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+          sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+          yum update -y
+          yum install -y createrepo rpmdevtools rpmlint wget gcc python3 yum-utils tree
+      - name: Build RPM
+        run: |
+          rpmdev-setuptree
+          echo '#include <stdio.h>
+          int main() {
+            printf("Hello World!\\n");
+            return 0;
+          }' | gcc -o ~/rpmbuild/SOURCES/hello-world -x c -
+          rpmbuild --target "x86_64" -bb hello-world.spec
+          tree
+          cd ~
+          tree
+#          hello-world
