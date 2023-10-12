@@ -8,7 +8,6 @@ License: example # https://fedoraproject.org/wiki/Licensing:Main?rd=Licensing#So
 Packager: Example Team
 Requires: bash
 
-
 %description
 An example package containing a hello-world binary
 
