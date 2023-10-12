@@ -30,5 +30,7 @@ jobs:
             return 0;
           }' | gcc -o ~/rpmbuild/SOURCES/hello-world -x c -
           rpmbuild --target "x86_64" -bb hello-world.spec
-          yum install -y ~/rpmbuild/RPMS/aarch64/hello-world-1.0.0-1.aarch64.rpm
-          hello-world
+          tree
+          cd ~
+          tree
+#          hello-world
